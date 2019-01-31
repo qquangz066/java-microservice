@@ -1,0 +1,47 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.1.2.RELEASE'
+    id "org.liquibase.gradle" version "2.0.1"
+    id "io.spring.dependency-management" version "1.0.6.RELEASE"
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+}
+configurations {
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.liquibase:liquibase-core'
+    runtimeOnly 'org.postgresql:postgresql'
+    implementation('org.springframework.boot:spring-boot-starter-security')
+    implementation('org.springframework.security.oauth:spring-security-oauth2:2.3.4.RELEASE')
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    liquibaseRuntime 'org.liquibase:liquibase-core:3.6.2'
+    liquibaseRuntime 'org.postgresql:postgresql'
+    liquibaseRuntime 'ch.qos.logback:logback-classic:1.2.3'
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
+}
+
+liquibase {
+    activities {
+        main {
+            changeLogFile 'src/main/resources/changelog/db.changelog-master.yml'
+            url 'jdbc:postgresql://localhost:5432/postgres'
+            username 'postgres'
+            password 'postgres'
+        }
+    }
+}

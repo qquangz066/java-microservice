@@ -1,0 +1,180 @@
+databaseChangeLog:
+- changeSet:
+    id: 1
+    author: myname
+    changes:
+
+    - createTable:
+        tableName: oauth_client_details
+        columns:
+        - column:
+            name: client_id
+            type: VARCHAR(256)
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: oauth_client_details_pkey
+        - column:
+            name: resource_ids
+            type: VARCHAR(8192)
+        - column:
+            name: client_secret
+            type: VARCHAR(256)
+        - column:
+            name: scope
+            type: VARCHAR(8192)
+        - column:
+            name: authorized_grant_types
+            type: VARCHAR(256)
+        - column:
+            name: web_server_redirect_uri
+            type: VARCHAR(256)
+        - column:
+            name: authorities
+            type: VARCHAR(1000)
+        - column:
+            name: access_token_validity
+            type: INT
+        - column:
+            name: refresh_token_validity
+            type: INT
+        - column:
+            name: additional_information
+            type: VARCHAR(4096)
+        - column:
+            name: autoapprove
+            type: VARCHAR(256)
+
+    - createTable:
+        tableName: oauth_client_token
+        columns:
+        - column:
+            name: token_id
+            type: VARCHAR(256)
+        - column:
+            name: token
+            type: BYTEA
+        - column:
+            name: authentication_id
+            type: VARCHAR(256)
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: oauth_client_token_pkey
+        - column:
+            name: user_name
+            type: VARCHAR(256)
+        - column:
+            name: client_id
+            type: VARCHAR(256)
+
+    - createTable:
+        tableName: oauth_access_token
+        columns:
+        - column:
+            name: token_id
+            type: VARCHAR(256)
+        - column:
+            name: token
+            type: BYTEA
+        - column:
+            name: authentication_id
+            type: VARCHAR(256)
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: oauth_access_token_pkey
+        - column:
+            name: user_name
+            type: VARCHAR(256)
+        - column:
+            name: client_id
+            type: VARCHAR(256)
+        - column:
+            name: authentication
+            type: BYTEA
+        - column:
+            name: refresh_token
+            type: VARCHAR(256)
+
+    - createTable:
+        tableName: oauth_refresh_token
+        columns:
+        - column:
+            name: token_id
+            type: VARCHAR(256)
+        - column:
+            name: token
+            type: BYTEA
+        - column:
+            name: authentication
+            type: BYTEA
+
+    - createTable:
+        tableName: oauth_code
+        columns:
+        - column:
+            name: code
+            type: VARCHAR(256)
+        - column:
+            name: authentication
+            type: BYTEA
+
+    - createTable:
+        tableName: oauth_approvals
+        columns:
+        - column:
+            name: userid
+            type: VARCHAR(256)
+        - column:
+            name: clientid
+            type: VARCHAR(256)
+        - column:
+            name: scope
+            type: VARCHAR(256)
+        - column:
+            name: status
+            type: VARCHAR(10)
+        - column:
+            name: expiresat
+            type: timestamp
+        - column:
+            name: lastmodifiedat
+            type: timestamp
+
+#INSERT
+
+    - insert:
+          tableName: oauth_client_details
+          columns:
+          - column:
+                name: client_id
+                value: read-write-client
+          - column:
+                name: resource_ids
+                value: product-api
+          - column:
+                name: client_secret #=admin
+                value: $2a$10$L0C1Z4tplwk/CgpHsImcp.Usf9E8dULP7iASTK0jlK99RceJ.mKd.
+          - column:
+                name: scope
+                value: none
+          - column:
+                name: authorized_grant_types
+                value: client_credentials,refresh_token,password
+          - column:
+                name: web_server_redirect_uri
+                value: https://localhost
+          - column:
+                name: authorities
+                value: user:create,user:read
+          - column:
+                name: access_token_validity
+                valueNumeric: 900
+          - column:
+                name: refresh_token_validity
+                valueNumeric: 0
+          - column:
+                name: additional_information
+          - column:
+                name: autoapprove
