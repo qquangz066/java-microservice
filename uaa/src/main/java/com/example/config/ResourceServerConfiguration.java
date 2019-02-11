@@ -23,7 +23,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .antMatchers(
                         HttpMethod.GET, "/v2/api-docs", "/configuration/ui",
                         "/swagger-resources", "/configuration/security", "/swagger-ui.html",
-                        "/webjars/**", "/swagger-resources/configuration/ui"
+                        "/webjars/**", "/swagger-resources/configuration/ui","/actuator/health","/favicon.ico"
                 ).permitAll()
                 .antMatchers("/oauth/token").permitAll()
                 .anyRequest().authenticated()
