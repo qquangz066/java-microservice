@@ -1,5 +1,7 @@
 server:
-  port: 9999
+  port: 9998
+  servlet:
+    context-path: /uaa
 
 spring:
   application:
@@ -12,8 +14,10 @@ spring:
         ipAddress: 10.0.75.1
         preferIpAddress: true
         instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
-        healthCheckPath:  /actuator/health
+        healthCheckPath:  /uaa/actuator/health
         healthCheckInterval: 15s
+        tags: traefik.enable=true,traefik.frontend.rule=PathPrefix:/uaa
+
 
   jpa:
     database: POSTGRESQL
