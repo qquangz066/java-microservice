@@ -40,7 +40,7 @@ public class Application implements CommandLineRunner {
     public void run(String... args) throws Exception {
         if (userRepository.count() < 1) {
             Role role = roleRepository.save(new Role("ADMIN",
-                    Stream.of(authorityRepository.save(new Authority("user:create"))).collect(Collectors.toSet())));
+                    Stream.of(authorityRepository.save(new Authority("user:create")),authorityRepository.save(new Authority("user:read"))).collect(Collectors.toSet())));
             userRepository.save(new User("admin", passwordEncoder.encode("admin"), "admin",
                     Stream.of(role).collect(Collectors.toSet())));
         }

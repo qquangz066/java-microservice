@@ -34,4 +34,4 @@ logging:
   level:
     root: WARN
     logging.level.org.springframework.web: DEBUG
-    org.springframework.security: DEBUG
+    org.springframework.security: ERROR

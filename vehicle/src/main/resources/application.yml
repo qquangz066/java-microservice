@@ -2,6 +2,19 @@ server:
   port: 8081
 
 spring:
+  application:
+    name: vehicle
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        ipAddress: 10.0.75.1
+        preferIpAddress: true
+        instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+        healthCheckPath:  /actuator/health
+        healthCheckInterval: 15s
+
   jpa:
     database: POSTGRESQL
     show-sql: true
@@ -14,3 +27,9 @@ spring:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
     password: postgres
+
+logging:
+  level:
+    root: WARN
+    logging.level.org.springframework.web: DEBUG
+    org.springframework.security: DEBUG

@@ -152,7 +152,7 @@ databaseChangeLog:
                 value: read-write-client
           - column:
                 name: resource_ids
-                value: product-api
+                value: uaa,vehicle
           - column:
                 name: client_secret #=admin
                 value: $2a$10$L0C1Z4tplwk/CgpHsImcp.Usf9E8dULP7iASTK0jlK99RceJ.mKd.
@@ -167,7 +167,7 @@ databaseChangeLog:
                 value: https://localhost
           - column:
                 name: authorities
-                value: user:create,user:read
+                value: user:read
           - column:
                 name: access_token_validity
                 valueNumeric: 900

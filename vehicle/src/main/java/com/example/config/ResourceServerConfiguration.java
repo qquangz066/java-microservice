@@ -11,9 +11,10 @@ import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHand
 @Configuration
 @EnableResourceServer
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
+
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-        resources.resourceId("uaa").stateless(false);
+        resources.resourceId("vehicle").stateless(false);
     }
 
     @Override
@@ -21,12 +22,11 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         http.httpBasic().disable()
                 .authorizeRequests()
                 .antMatchers(
-                        HttpMethod.GET, "/v2/api-docs", "/configuration/ui",
-                        "/swagger-resources", "/configuration/security", "/swagger-ui.html",
-                        "/webjars/**", "/swagger-resources/configuration/ui","/actuator/health","/favicon.ico"
+                        HttpMethod.GET, "/actuator/health", "/favicon.ico", "/vehicles"
                 ).permitAll()
                 .antMatchers("/oauth/token").permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
     }
+
 }
