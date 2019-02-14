@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '2.1.2.RELEASE'
     id "io.spring.dependency-management" version "1.0.6.RELEASE"
+    id 'com.bmuschko.docker-remote-api' version '4.4.1'
 }
 
 group = 'com.example'
@@ -10,8 +11,14 @@ sourceCompatibility = '1.8'
 
 repositories {
     mavenCentral()
+    jcenter()
 }
-
+configurations {
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+}
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
@@ -23,4 +30,27 @@ dependencies {
     implementation('org.springframework.boot:spring-boot-starter-security')
     implementation('org.springframework.security.oauth:spring-security-oauth2:2.3.4.RELEASE')
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+import com.bmuschko.gradle.docker.tasks.image.Dockerfile
+
+task copyDockerFiles(type: Copy, dependsOn: bootJar) {
+    from project.bootJar.archivePath
+    into "$buildDir/docker"
+}
+
+task createDockerfile(type: Dockerfile, dependsOn: copyDockerFiles)  {
+    destFile = project.file('build/docker/Dockerfile')
+    from 'openjdk:8-jre-alpine'
+    workingDir '/srv'
+    copyFile project.bootJar.archiveName, '.'
+    entryPoint 'java'
+    defaultCommand '-jar', project.bootJar.archiveName
+}
+
+task buildImage(type: DockerBuildImage, dependsOn: createDockerfile) {
+    inputDir = project.file('build/docker')
+    tags.add('vehicle:latest')
 }

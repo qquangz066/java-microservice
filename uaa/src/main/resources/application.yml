@@ -8,7 +8,7 @@ spring:
     name: uaa
   cloud:
     consul:
-      host: localhost
+      host: 10.0.75.1
       port: 8500
       discovery:
         ipAddress: 10.0.75.1

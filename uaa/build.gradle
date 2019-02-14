@@ -3,6 +3,7 @@ plugins {
     id 'org.springframework.boot' version '2.1.2.RELEASE'
     id "org.liquibase.gradle" version "2.0.1"
     id "io.spring.dependency-management" version "1.0.6.RELEASE"
+    id 'com.bmuschko.docker-remote-api' version '4.4.1'
 }
 
 group = 'com.example'
@@ -11,6 +12,7 @@ sourceCompatibility = '1.8'
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 configurations {
     developmentOnly
@@ -46,4 +48,26 @@ liquibase {
             password 'postgres'
         }
     }
+}
+
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+import com.bmuschko.gradle.docker.tasks.image.Dockerfile
+
+task copyDockerFiles(type: Copy, dependsOn: bootJar) {
+    from project.bootJar.archivePath
+    into "$buildDir/docker"
+}
+
+task createDockerfile(type: Dockerfile, dependsOn: copyDockerFiles) {
+    destFile = project.file('build/docker/Dockerfile')
+    from 'openjdk:8-jre-alpine'
+    workingDir '/srv'
+    copyFile project.bootJar.archiveName, '.'
+    entryPoint 'java'
+    defaultCommand '-jar', project.bootJar.archiveName
+}
+
+task buildImage(type: DockerBuildImage, dependsOn: createDockerfile) {
+    inputDir = project.file('build/docker')
+    tags.add('uaa:latest')
 }

@@ -37,6 +37,7 @@ services:
   traefik:
     image: traefik:latest
     restart: always
+    command: --api --docker
     ports:
     - 80:80
     - 443:443
@@ -45,3 +46,15 @@ services:
     - ./traefik.toml:/traefik.toml
     networks:
     - web
+
+#  uaa:
+#    image:
+#    healthcheck:
+#      test: wget -q --spider $$(hostname -i):8080/uaa/actuator/health
+#      interval: 10s
+#      timeout: 360s
+#      retries: 50
+#    ports:
+#    - "11000:8080"
+#    depends_on:
+#    - postgres
