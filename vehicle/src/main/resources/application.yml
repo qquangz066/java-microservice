@@ -1,44 +1,44 @@
-server:
-  port: 8081
-
-spring:
-  application:
-    name: vehicle
-  cloud:
-    consul:
-      host: 10.0.75.1
-      port: 8500
-      discovery:
-        ipAddress: 10.0.75.1
-        preferIpAddress: true
-        instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
-        healthCheckPath:  /actuator/health
-        healthCheckInterval: 15s
-        tags: traefik.enable=true,traefik.frontend.rule=PathPrefix:/vehicles
-
-#        tags:
-#        - >-
-#          traefik.frontend.rule=
-#          Path:
-#          /api/vehicles/ecus,
-#          /api/vehicles/ecus/{id},
-
-
-  jpa:
-    database: POSTGRESQL
-    show-sql: true
-    hibernate:
-      ddl-auto: update
-      dialect: org.hibernate.dialect.PostgreSQLDialect
-    properties.hibernate.jdbc.lob.non_contextual_creation: true
-  datasource:
-    platform: postgres
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: postgres
-
-logging:
-  level:
-    root: WARN
-    logging.level.org.springframework.web: DEBUG
-    org.springframework.security: DEBUG
+#server:
+#  port: 8081
+#
+#spring:
+#  application:
+#    name: vehicle
+#  cloud:
+#    consul:
+#      host: consul #10.0.75.1
+#      port: 8500
+#      discovery:
+#        ipAddress: localhost #10.0.75.1
+#        preferIpAddress: true
+#        instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+#        healthCheckPath:  /actuator/health
+#        healthCheckInterval: 15s
+#        tags: traefik.enable=true,traefik.frontend.rule=PathPrefix:/vehicles
+#
+##        tags:
+##        - >-
+##          traefik.frontend.rule=
+##          Path:
+##          /api/vehicles/ecus,
+##          /api/vehicles/ecus/{id},
+#
+#
+#  jpa:
+#    database: POSTGRESQL
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: update
+#      dialect: org.hibernate.dialect.PostgreSQLDialect
+#    properties.hibernate.jdbc.lob.non_contextual_creation: true
+#  datasource:
+#    platform: postgres
+#    url: jdbc:postgresql://localhost:5432/postgres
+#    username: postgres
+#    password: postgres
+#
+#logging:
+#  level:
+#    root: WARN
+#    logging.level.org.springframework.web: DEBUG
+#    org.springframework.security: DEBUG

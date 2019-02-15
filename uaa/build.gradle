@@ -43,7 +43,7 @@ liquibase {
     activities {
         main {
             changeLogFile 'src/main/resources/changelog/db.changelog-master.yml'
-            url 'jdbc:postgresql://localhost:5432/postgres'
+            url 'jdbc:postgresql://db-postgres/postgres'
             username 'postgres'
             password 'postgres'
         }

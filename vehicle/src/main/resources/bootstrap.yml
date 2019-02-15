@@ -1,22 +1,28 @@
 server:
-  port: 9999
-  servlet:
-    context-path: /uaa
+  port: 8081
 
 spring:
   application:
-    name: uaa
+    name: vehicle
   cloud:
     consul:
       host: consul #10.0.75.1
       port: 8500
       discovery:
-#        ipAddress: localhost #10.0.75.1
-#        preferIpAddress: true
+        ipAddress: localhost #10.0.75.1
+        preferIpAddress: true
         instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
-        healthCheckPath:  actuator/health
+        healthCheckPath:  vehicle/actuator/health
         healthCheckInterval: 15s
-        tags: traefik.enable=true,traefik.frontend.rule=PathPrefix:/uaa
+        tags: traefik.enable=true,traefik.frontend.rule=PathPrefix:/vehicles
+
+#        tags:
+#        - >-
+#          traefik.frontend.rule=
+#          Path:
+#          /api/vehicles/ecus,
+#          /api/vehicles/ecus/{id},
+
 
   jpa:
     database: POSTGRESQL
@@ -30,11 +36,9 @@ spring:
     url: jdbc:postgresql://db-postgres/postgres
     username: postgres
     password: postgres
-  liquibase:
-    change-log: classpath:/changelog/db.changelog-master.yml
 
 logging:
   level:
     root: WARN
     logging.level.org.springframework.web: DEBUG
-    org.springframework.security: ERROR
+    org.springframework.security: DEBUG

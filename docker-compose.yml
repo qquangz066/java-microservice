@@ -1,9 +1,5 @@
 version: "3.1"
 
-networks:
-  web:
-    driver: bridge
-
 services:
   db-postgres:
     image: postgres:latest
@@ -24,8 +20,6 @@ services:
 
   consul:
     image: bitnami/consul:latest
-    networks:
-    - web
     ports:
     - 8300:8300
     - 8301:8301
@@ -44,8 +38,16 @@ services:
     - 8080:8080
     volumes:
     - ./traefik.toml:/traefik.toml
-    networks:
-    - web
+
+  uaa:
+    image: uaa:latest
+    ports:
+#    - 9990-9999
+    - 9999:9999
+    depends_on:
+    - consul
+    - db-postgres
+    - db-mongo
 
 #  uaa:
 #    image:
@@ -58,3 +60,4 @@ services:
 #    - "11000:8080"
 #    depends_on:
 #    - postgres
+
