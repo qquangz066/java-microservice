@@ -18,15 +18,15 @@ services:
     ports:
       - 27017:27017
 
-  consul:
-    image: bitnami/consul:latest
-    ports:
-    - 8300:8300
-    - 8301:8301
-    - 8301:8301/udp
-    - 8500:8500
-    - 8600:8600
-    - 8600:8600/udp
+#  consul:
+#    image: bitnami/consul:latest
+#    ports:
+#    - 8300:8300
+#    - 8301:8301
+#    - 8301:8301/udp
+#    - 8500:8500
+#    - 8600:8600
+#    - 8600:8600/udp
 
   traefik:
     image: traefik:latest
@@ -39,15 +39,15 @@ services:
     volumes:
     - ./traefik.toml:/traefik.toml
 
-  uaa:
-    image: uaa:latest
-    ports:
-#    - 9990-9999
-    - 9999:9999
-    depends_on:
-    - consul
-    - db-postgres
-    - db-mongo
+#  uaa:
+#    image: uaa:latest
+#    ports:
+##    - 9990-9999
+#    - 9999:9999
+#    depends_on:
+#    - consul
+#    - db-postgres
+#    - db-mongo
 
 #  uaa:
 #    image:

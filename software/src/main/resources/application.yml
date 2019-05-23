@@ -1,0 +1,23 @@
+#server:
+#  port: 8180
+#
+#spring:
+#  application:
+#    name: software
+#  cloud:
+#    consul:
+#      host: localhost #10.0.75.1
+#      port: 8500
+#      discovery:
+#        #        ipAddress: localhost #10.0.75.1
+#        preferIpAddress: true
+#        instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+#        healthCheckPath: /actuator/health
+#        healthCheckInterval: 5s
+#        tags: traefik.enable=trueme
+#
+#security:
+#  oauth2:
+#    resource:
+#      user-info-uri: http://localhost:9999/uaa/user/me
+#      preferTokenInfo: false

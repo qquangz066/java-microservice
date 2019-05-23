@@ -37,6 +37,11 @@ dependencies {
     liquibaseRuntime 'org.postgresql:postgresql'
     liquibaseRuntime 'ch.qos.logback:logback-classic:1.2.3'
     developmentOnly("org.springframework.boot:spring-boot-devtools")
+    
+    //java 11
+    compile('javax.xml.bind:jaxb-api:2.3.0')
+    compile('javax.activation:activation:1.1')
+    compile('org.glassfish.jaxb:jaxb-runtime:2.3.0')
 }
 
 liquibase {

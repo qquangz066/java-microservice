@@ -1,4 +1,5 @@
 rootProject.name = 'microservice'
 include 'uaa'
 include 'vehicle'
+include 'software'
 

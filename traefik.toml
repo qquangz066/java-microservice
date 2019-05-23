@@ -22,7 +22,7 @@ address = ":8080"
 #
 # Required
 #
-endpoint = "10.0.75.1:8500"
+endpoint = "localhost:8500"
 
 # Default domain used.
 #

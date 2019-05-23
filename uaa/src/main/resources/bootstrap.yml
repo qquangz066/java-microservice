@@ -8,14 +8,14 @@ spring:
     name: uaa
   cloud:
     consul:
-      host: consul #10.0.75.1
+      host: localhost #10.0.75.1
       port: 8500
       discovery:
 #        ipAddress: localhost #10.0.75.1
-#        preferIpAddress: true
+        preferIpAddress: true
         instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
-        healthCheckPath:  actuator/health
-        healthCheckInterval: 15s
+        healthCheckPath: /uaa/actuator/health
+        healthCheckInterval: 5s
         tags: traefik.enable=true,traefik.frontend.rule=PathPrefix:/uaa
 
   jpa:
@@ -27,14 +27,14 @@ spring:
     properties.hibernate.jdbc.lob.non_contextual_creation: true
   datasource:
     platform: postgres
-    url: jdbc:postgresql://db-postgres/postgres
+    url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
     password: postgres
   liquibase:
     change-log: classpath:/changelog/db.changelog-master.yml
 
-logging:
-  level:
-    root: WARN
-    logging.level.org.springframework.web: DEBUG
-    org.springframework.security: ERROR
+#logging:
+#  level:
+#    root: WARN
+#    logging.level.org.springframework.web: DEBUG
+#    org.springframework.security: ERROR

@@ -1,0 +1,28 @@
+server:
+  port: 8180
+
+spring:
+  application:
+    name: software
+  cloud:
+    consul:
+      host: localhost #10.0.75.1
+      port: 8500
+      discovery:
+        #        ipAddress: localhost #10.0.75.1
+        preferIpAddress: true
+        instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+        healthCheckPath: /actuator/health
+        healthCheckInterval: 5s
+        tags: traefik.enable=trueme
+
+security:
+  oauth2:
+#    client:
+#      clientId: test-client
+#      clientSecret: $2a$10$L0C1Z4tplwk/CgpHsImcp.Usf9E8dULP7iASTK0jlK99RceJ.mKd.
+    resource:
+      tokenInfoUri: http://localhost:9999/uaa/oauth2/check_token
+#    resource:
+##      user-info-uri: http://localhost:9999/uaa/user/me
+#      loadBalanced: false
